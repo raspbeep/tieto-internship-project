@@ -66,5 +66,5 @@ variable "user" {
 }
 
 variable "rootfs_size" {
-	default = "4G"
+	default = "3G"
 }

@@ -13,12 +13,12 @@ resource "proxmox_vm_qemu" "k3s-server" {
   vmid = var.k3s-server-ids + count.index
   
   clone = "clone"
-  clone_wait = 50
+  clone_wait = 30
   full_clone = true
 
   cores = 4
   sockets = 1
-  memory = 16384
+  memory = 4096
   os_type="cloud-init"
   scsihw = "virtio-scsi-pci"
   
@@ -32,7 +32,7 @@ resource "proxmox_vm_qemu" "k3s-server" {
   disk {
     type = "virtio"
     storage = "local"
-    size = "4G"
+    size = "3G"
   }
   
   connection {
@@ -49,12 +49,12 @@ resource "proxmox_vm_qemu" "k3s-agent-node" {
   vmid = var.k3s-node-ids + count.index
   
   clone = "clone"
-  clone_wait = 50
+  clone_wait = 30
   full_clone = true
 
   cores = 4
   sockets = 1
-  memory = 16384
+  memory = 4096
   os_type="cloud-init"
   scsihw = "virtio-scsi-pci"
   
@@ -68,7 +68,7 @@ resource "proxmox_vm_qemu" "k3s-agent-node" {
   disk {
     type = "virtio"
     storage = "local"
-    size = "4G"
+    size = "3G"
   }
   
   connection {
