@@ -67,6 +67,26 @@ resource "proxmox_vm_qemu" "k3s-agent-node" {
     storage = var.storage["storage"]
     size = var.rootfs_size
   }
+
+  sshkeys = file(var.ssh_keys["pub"])
+
+  connection {
+    host = var.k3s-node-hostnames[count.index]
+    user = var.user
+    private_key = file(var.ssh_keys["priv"])
+    timeout = "5m"
+  }
+
+  provisioner "remote-exec" {
+	  # Leave this here so we know when to start with Ansible local-exec 
+    inline = [ "echo 'Cool, we are ready for provisioning'"]
+  }
+
+   provisioner "local-exec" {
+      working_dir = "../ansible/"
+      command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i ${var.k3s-server-ips[count.index]}, provision.yaml"
+  }
+
 }
 
 
