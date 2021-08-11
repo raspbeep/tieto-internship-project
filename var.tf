@@ -7,15 +7,29 @@ variable "proxmox_host" {
     }
 }
 
-/*
-variable "machine" {
-  // TODO: fill in information
-  // cores
-  // sockets
-  // ...
-}
-*/
 
+variable "machine" {
+  description = "VM specifications"
+  type = map
+  default = {
+    cores = 4
+    sockets = 1
+    memory = 4096
+    os_type = "cloud-init"
+    scsihw = "lsi"
+    qemu-agent = 1
+  }
+}
+
+variable "cloning" {
+  description = "Cloning options for all VMs created"
+  type = map
+  default = {
+    clone_template = "clone"
+    full_clone = false
+    clone_wait = 0
+  }
+}
 
 variable "k3s-server-ids" {
 	description = "Starting ID for k3s servers"
@@ -51,7 +65,6 @@ variable "k3s-node-ips" {
   default     = ["10.0.0.42", "10.0.0.43", "10.0.0.44", "10.0.0.45"]
 }
 
-// Config variables for Ansible
 variable "ssh_keys" {
 	type = map
     default = {
@@ -65,6 +78,14 @@ variable "user" {
 	description = "User used to SSH into the machine and provision it"
 }
 
+variable "storage" {
+  type = map
+	default = {
+    type = "virtio"
+    storage = "local"
+  }
+}
+
 variable "rootfs_size" {
-	default = "3G"
+  default = "3G"
 }
