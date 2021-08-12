@@ -36,8 +36,8 @@ resource "proxmox_vm_qemu" "k3s-server" {
     size = var.rootfs_size
   }
 
-  ciuser = "root"
-  cipassword = "tietoevry"
+  //ciuser = "root"
+  //cipassword = "tietoevry"
   sshkeys = file(var.ssh_keys["pub"])
 }
 
@@ -71,8 +71,8 @@ resource "proxmox_vm_qemu" "k3s-agent-node" {
     size = var.rootfs_size
   }
 
-  ciuser = "root"
-  cipassword = "tietoevry"
+  //ciuser = "root"
+  //cipassword = "tietoevry"
   sshkeys = file(var.ssh_keys["pub"])
 }
 
@@ -107,8 +107,8 @@ resource "proxmox_vm_qemu" "k3s-load-balancer" {
     size = var.rootfs_size
   }
 
-  ciuser = "root"
-  cipassword = "tietoevry"
+  //ciuser = "root"
+  //cipassword = "tietoevry"
   sshkeys = file(var.ssh_keys["pub"])
 
   /*
