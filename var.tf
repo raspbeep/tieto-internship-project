@@ -73,6 +73,16 @@ variable "ssh_keys" {
     } 
 }
 
+variable proxy_jump {
+  description = "Machine hostname used to proxyjump to LAN"
+  default = "10.0.0.43"
+}
+
+variable proxy_port {
+  description = "Port on which to connect to the proxy machine"
+  default = 20
+}
+
 variable "user" {
 	default     = "root"
 	description = "User used to SSH into the machine and provision it"

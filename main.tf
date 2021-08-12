@@ -35,6 +35,19 @@ resource "proxmox_vm_qemu" "k3s-server" {
     storage = var.storage["storage"]
     size = var.rootfs_size
   }
+
+  sshkeys = file(var.ssh_keys["pub"])
+
+  connection {
+    bastion_host = var.proxy_jump
+    bastion_port = var.proxy_port
+    bastion_private_key = file(var.ssh_keys["priv"])
+
+    host = var.k3s-node-ips[count.index]
+    user = var.user
+    private_key = file(var.ssh_keys["priv"])
+    timeout = "5m"
+  }
 }
 
 resource "proxmox_vm_qemu" "k3s-agent-node" {
@@ -71,7 +84,11 @@ resource "proxmox_vm_qemu" "k3s-agent-node" {
   sshkeys = file(var.ssh_keys["pub"])
 
   connection {
-    host = var.k3s-node-hostnames[count.index]
+    bastion_host = var.proxy_jump
+    bastion_port = var.proxy_port
+    bastion_private_key = file(var.ssh_keys["priv"])
+
+    host = var.k3s-node-ips[count.index]
     user = var.user
     private_key = file(var.ssh_keys["priv"])
     timeout = "5m"
