@@ -3,10 +3,19 @@ variable "proxmox_host" {
     default = {
       pm_api_url = "https://localhost:20001/api2/json"
       pm_user = "root@pam"
+      pm_password = "TietoEVRY2021"
       target_node = "pve-01"
     }
 }
 
+variable "login" {
+  description = "Login credentials"
+  type = map
+    default = {
+      name = "root"
+      password = "pass"
+    }
+}
 
 variable "machine" {
   description = "VM specifications"
@@ -33,12 +42,17 @@ variable "cloning" {
 
 variable "k3s-server-ids" {
 	description = "Starting ID for k3s servers"
-  default     = 105
+  default     = 140
 }
 
 variable "k3s-node-ids" {
 	description = "Starting ID for the k3s agent nodes"
-  default     = 205
+  default     = 155
+}
+
+variable "k3s-load-balancer-ids" {
+	description = "Starting ID for the k3s load balancer nodes"
+  default     = 170
 }
 
 variable "k3s-server-hostnames" {
@@ -53,6 +67,12 @@ variable "k3s-node-hostnames" {
   default     = ["k3s-node1", "k3s-node2", "k3s-node3", "k3s-node4"]
 }
 
+variable "k3s-load-balancer-hostnames" {
+  description = "Load balancer nodes to be created"
+  type        = list(string)
+  default     = ["k3s-load-balancer"]
+}
+
 variable "k3s-server-ips" {
   description = "IPs of the servers, respective to the hostname order"
   type        = list(string)
@@ -62,7 +82,13 @@ variable "k3s-server-ips" {
 variable "k3s-node-ips" {
   description = "IPs of the nodes, respective to the hostname order"
   type        = list(string)
-  default     = ["10.0.0.42", "10.0.0.43", "10.0.0.44", "10.0.0.45"]
+  default     = ["10.0.0.52", "10.0.0.53", "10.0.0.54", "10.0.0.55"]
+}
+
+variable "k3s-load-balancer-ips" {
+  description = "IPs of the servers, respective to the hostname order"
+  type        = list(string)
+  default     = ["10.0.0.70"]
 }
 
 variable "ssh_keys" {
