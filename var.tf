@@ -8,15 +8,6 @@ variable "proxmox_host" {
     }
 }
 
-variable "login" {
-  description = "Login credentials"
-  type = map
-    default = {
-      name = "root"
-      password = "pass"
-    }
-}
-
 variable "machine" {
   description = "VM specifications"
   type = map
@@ -30,13 +21,17 @@ variable "machine" {
   }
 }
 
+variable "rootfs_size" {
+  default = "4G"
+}
+
 variable "cloning" {
   description = "Cloning options for all VMs created"
   type = map
   default = {
     clone_template = "clone"
     full_clone = false
-    clone_wait = 0
+    clone_wait = 30 // temporary fix
   }
 }
 
@@ -120,8 +115,4 @@ variable "storage" {
     type = "virtio"
     storage = "local"
   }
-}
-
-variable "rootfs_size" {
-  default = "3G"
 }
