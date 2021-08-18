@@ -25,13 +25,18 @@ variable "rootfs_size" {
   default = "4G"
 }
 
+variable "dns_nameserver" {
+  description = "DNS nameserver to set on all nodes"
+  default = "8.8.8.8"
+}
+
 variable "cloning" {
   description = "Cloning options for all VMs created"
   type = map
   default = {
     clone_template = "clone"
-    full_clone = false
-    clone_wait = 30 // temporary fix
+    full_clone = true
+    clone_wait = 50 // temporary fix
   }
 }
 
@@ -92,16 +97,6 @@ variable "ssh_keys" {
       pub  = "~/.ssh/id_rsa.pub"
       priv = "~/.ssh/id_rsa"
     } 
-}
-
-variable proxy_jump {
-  description = "Machine hostname used to proxyjump to LAN"
-  default = "10.0.0.43"
-}
-
-variable proxy_port {
-  description = "Port on which to connect to the proxy machine"
-  default = 20
 }
 
 variable "user" {

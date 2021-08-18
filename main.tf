@@ -29,7 +29,8 @@ resource "proxmox_vm_qemu" "k3s-server" {
   }
   
   ipconfig0 = "ip=${var.k3s-server-ips[count.index]}/24,gw=${cidrhost(format("%s/24", var.k3s-server-ips[count.index]), 1)}"
-  
+  nameserver = var.dns_nameserver
+
   disk {
     type = var.storage["type"]
     storage = var.storage["storage"]
@@ -63,7 +64,8 @@ resource "proxmox_vm_qemu" "k3s-agent-node" {
   }
   
   ipconfig0 = "ip=${var.k3s-node-ips[count.index]}/24,gw=${cidrhost(format("%s/24", var.k3s-node-ips[count.index]), 1)}"
-  
+  nameserver = var.dns_nameserver
+
   disk {
     type = var.storage["type"]
     storage = var.storage["storage"]
@@ -98,7 +100,8 @@ resource "proxmox_vm_qemu" "k3s-load-balancer" {
   }
   
   ipconfig0 = "ip=${var.k3s-load-balancer-ips[count.index]}/24,gw=${cidrhost(format("%s/24", var.k3s-load-balancer-ips[count.index]), 1)}"
-  
+  nameserver = var.dns_nameserver
+
   disk {
     type = var.storage["type"]
     storage = var.storage["storage"]
