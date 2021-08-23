@@ -1,28 +1,35 @@
 variable "proxmox_host" {
 	type = map
     default = {
-      pm_api_url = "https://localhost:20001/api2/json"
+      #pm_api_url = "https://localhost:20001/api2/json"
+      pm_api_url = "https://localhost:8006/api2/json"
       pm_user = "root@pam"
       pm_password = "TietoEVRY2021"
       target_node = "pve-01"
     }
 }
 
+variable "ciuser" {
+	default     = "root"
+	description = "User used to SSH into the machine and provision it"
+}
+
+variable "cipassword" {
+	default     = "root"
+	description = "User used to SSH into the machine and provision it"
+}
+
 variable "machine" {
   description = "VM specifications"
   type = map
   default = {
-    cores = 4
+    cores = 1
     sockets = 1
     memory = 4096
     os_type = "cloud-init"
-    scsihw = "lsi"
+    scsihw = "virtio-scsi-pci"
     qemu-agent = 1
   }
-}
-
-variable "rootfs_size" {
-  default = "4G"
 }
 
 variable "dns_nameserver" {
@@ -35,8 +42,8 @@ variable "cloning" {
   type = map
   default = {
     clone_template = "clone"
-    full_clone = true
-    clone_wait = 50 // temporary fix
+    full_clone = false
+    clone_wait = 15 // temporary fix
   }
 }
 
@@ -99,15 +106,12 @@ variable "ssh_keys" {
     } 
 }
 
-variable "user" {
-	default     = "root"
-	description = "User used to SSH into the machine and provision it"
-}
-
-variable "storage" {
+variable "storage-resize" {
   type = map
 	default = {
-    type = "virtio"
+    slot = 0
+    type = "scsi"
     storage = "local"
+    size = "4G"
   }
 }

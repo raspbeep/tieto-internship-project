@@ -15,6 +15,7 @@ resource "proxmox_vm_qemu" "k3s-server" {
   clone = var.cloning["clone_template"]
   full_clone = var.cloning["full_clone"]
   clone_wait = var.cloning["clone_wait"]
+  // additional_wait = 40
 
   cores = var.machine["cores"]
   sockets = var.machine["sockets"]
@@ -31,14 +32,16 @@ resource "proxmox_vm_qemu" "k3s-server" {
   ipconfig0 = "ip=${var.k3s-server-ips[count.index]}/24,gw=${cidrhost(format("%s/24", var.k3s-server-ips[count.index]), 1)}"
   nameserver = var.dns_nameserver
 
-  disk {
-    type = var.storage["type"]
-    storage = var.storage["storage"]
-    size = var.rootfs_size
-  }
-  ciuser = "root"
-  cipassword = "root"
+  ciuser = var.ciuser
+  cipassword = var.cipassword
   sshkeys = file(var.ssh_keys["pub"])
+
+  disk {
+    slot = var.storage-resize["slot"]
+    size = var.storage-resize["size"]
+    storage  = var.storage-resize["storage"]
+    type = var.storage-resize["type"]
+  } 
 }
 
 resource "proxmox_vm_qemu" "k3s-agent-node" {
@@ -50,6 +53,7 @@ resource "proxmox_vm_qemu" "k3s-agent-node" {
   clone = var.cloning["clone_template"]
   full_clone = var.cloning["full_clone"]
   clone_wait = var.cloning["clone_wait"]
+  // additional_wait = 40
 
   cores = var.machine["cores"]
   sockets = var.machine["sockets"]
@@ -66,15 +70,16 @@ resource "proxmox_vm_qemu" "k3s-agent-node" {
   ipconfig0 = "ip=${var.k3s-node-ips[count.index]}/24,gw=${cidrhost(format("%s/24", var.k3s-node-ips[count.index]), 1)}"
   nameserver = var.dns_nameserver
 
-  disk {
-    type = var.storage["type"]
-    storage = var.storage["storage"]
-    size = var.rootfs_size
-  }
-
-  ciuser = "root"
-  cipassword = "root"
+  ciuser = var.ciuser
+  cipassword = var.cipassword
   sshkeys = file(var.ssh_keys["pub"])
+
+  disk {
+    slot = var.storage-resize["slot"]
+    size = var.storage-resize["size"]
+    storage  = var.storage-resize["storage"]
+    type = var.storage-resize["type"]
+  } 
 }
 
 resource "proxmox_vm_qemu" "k3s-load-balancer" {
@@ -86,6 +91,7 @@ resource "proxmox_vm_qemu" "k3s-load-balancer" {
   clone = var.cloning["clone_template"]
   full_clone = var.cloning["full_clone"]
   clone_wait = var.cloning["clone_wait"]
+  // additional_wait = 40
 
   cores = var.machine["cores"]
   sockets = var.machine["sockets"]
@@ -102,12 +108,14 @@ resource "proxmox_vm_qemu" "k3s-load-balancer" {
   ipconfig0 = "ip=${var.k3s-load-balancer-ips[count.index]}/24,gw=${cidrhost(format("%s/24", var.k3s-load-balancer-ips[count.index]), 1)}"
   nameserver = var.dns_nameserver
 
-  disk {
-    type = var.storage["type"]
-    storage = var.storage["storage"]
-    size = var.rootfs_size
-  }
-  ciuser = "root"
-  cipassword = "root"
+  ciuser = var.ciuser
+  cipassword = var.cipassword
   sshkeys = file(var.ssh_keys["pub"])
+
+  disk {
+    slot = var.storage-resize["slot"]
+    size = var.storage-resize["size"]
+    storage  = var.storage-resize["storage"]
+    type = var.storage-resize["type"]
+  }
 }
