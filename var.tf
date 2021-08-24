@@ -47,6 +47,11 @@ variable "cloning" {
   }
 }
 
+variable "k3s-master-id" {
+	description = "Id for master"
+  default     = 135
+}
+
 variable "k3s-server-ids" {
 	description = "Starting ID for k3s servers"
   default     = 140
@@ -60,6 +65,11 @@ variable "k3s-node-ids" {
 variable "k3s-load-balancer-ids" {
 	description = "Starting ID for the k3s load balancer nodes"
   default     = 170
+}
+
+variable "k3s-master-hostname" {
+  description = "Master to be created"
+  default     = "k3s-master"
 }
 
 variable "k3s-server-hostnames" {
@@ -78,6 +88,11 @@ variable "k3s-load-balancer-hostnames" {
   description = "Load balancer nodes to be created"
   type        = list(string)
   default     = ["k3s-load-balancer"]
+}
+
+variable "k3s-master-ip" {
+  description = "IPs of the master"
+  default     = "10.0.0.35"
 }
 
 variable "k3s-server-ips" {
