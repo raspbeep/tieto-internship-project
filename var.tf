@@ -1,7 +1,6 @@
 variable "proxmox_host" {
 	type = map
     default = {
-      #pm_api_url = "https://localhost:20001/api2/json"
       pm_api_url = "https://localhost:8006/api2/json"
       pm_user = "root@pam"
       pm_password = "TietoEVRY2021"
@@ -47,13 +46,13 @@ variable "cloning" {
   }
 }
 
-variable "k3s-master-id" {
-	description = "Id for master"
+variable "k3s-master-server-id" {
+	description = "Id for master server node"
   default     = 135
 }
 
-variable "k3s-server-ids" {
-	description = "Starting ID for k3s servers"
+variable "k3s-server-id" {
+	description = "Id for server node"
   default     = 140
 }
 
@@ -67,15 +66,19 @@ variable "k3s-load-balancer-ids" {
   default     = 170
 }
 
-variable "k3s-master-hostname" {
-  description = "Master to be created"
-  default     = "k3s-master"
+variable "k3s-db-id" {
+	description = "ID for the k3s datastore node"
+  default     = 180
 }
 
-variable "k3s-server-hostnames" {
-  description = "Servers to be created"
-  type        = list(string)
-  default     = ["k3s-server1", "k3s-server2"]
+variable "k3s-master-server-hostname" {
+  description = "Master to be created"
+  default     = "k3s-master-server"
+}
+
+variable "k3s-server-hostname" {
+  description = "Server to be created"
+  default     = "k3s-server"
 }
 
 variable "k3s-node-hostnames" {
@@ -90,27 +93,36 @@ variable "k3s-load-balancer-hostnames" {
   default     = ["k3s-load-balancer"]
 }
 
-variable "k3s-master-ip" {
-  description = "IPs of the master"
+variable "k3s-db-hostname" {
+  description = "Database to be created"
+  default     = "k3s-db"
+}
+
+variable "k3s-master-server-ip" {
+  description = "IP of the master"
   default     = "10.0.0.35"
 }
 
-variable "k3s-server-ips" {
-  description = "IPs of the servers, respective to the hostname order"
-  type        = list(string)
-  default     = ["10.0.0.40", "10.0.0.41"]
+variable "k3s-server-ip" {
+  description = "IP of the server"
+  default     = "10.0.0.40"
 }
 
 variable "k3s-node-ips" {
   description = "IPs of the nodes, respective to the hostname order"
   type        = list(string)
-  default     = ["10.0.0.52", "10.0.0.53", "10.0.0.54", "10.0.0.55"]
+  default     = ["10.0.0.50", "10.0.0.51", "10.0.0.52", "10.0.0.53"]
 }
 
 variable "k3s-load-balancer-ips" {
   description = "IPs of the servers, respective to the hostname order"
   type        = list(string)
-  default     = ["10.0.0.70"]
+  default     = ["10.0.0.60"]
+}
+
+variable "k3s-db-ip" {
+  description = "IP of the database"
+  default     = "10.0.0.70"
 }
 
 variable "ssh_keys" {
@@ -127,6 +139,6 @@ variable "storage-resize" {
     slot = 0
     type = "scsi"
     storage = "local"
-    size = "4G"
+    size = "5G"
   }
 }
