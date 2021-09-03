@@ -1,7 +1,19 @@
 db_ip=10.0.0.70
 db_name=kubernetes
-db_pass=TietoEVRY2021*
 
-mysql -h $db_ip -u root -p$db_pass $db_name < "db_setup.sql"
+# update and upgrade
+ssh $db_ip "apt-get -y update && apt-get -y upgrade"
+
+# apt install mysql-server instance
+ssh $db_ip "apt-get install mysql-server -y"
+
+# change the bind-address
+ssh $db_ip "sed -i '0,/127.0.0.1/s//0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf"
+
+# before new shell connect
+#export KUBECONFIG=/root/kubeconfig
+scp ./db_setup.sql $db_ip:~/
+
+ssh $db_ip "mysql < ./db_setup.sql"
 
 ssh $db_ip "systemctl start mysql && systemctl enable mysql && systemctl restart mysql"
