@@ -1,6 +1,6 @@
-# TODO: ssh-keygen -f "/root/.ssh/known_hosts" -R "10.0.0.60"
-
 bal_ip=10.0.0.60
+
+ssh-keygen -f "/root/.ssh/known_hosts" -R "${bal_ip}"
 # # TODO: args=-o "StrictHostKeyChecking no"
 
 # update and upgrade

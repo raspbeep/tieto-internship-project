@@ -1,3 +1,9 @@
+# TODO: multithreading while adding agents
+# read_cfg cfgA &
+# read_cfg cfgB &
+# read_cfg cfgC &
+# wait
+
 # server 1
 k3sup install --k3s-version v1.19.1-rc2+k3s1 \
     --cluster \

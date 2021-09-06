@@ -1,6 +1,8 @@
 db_ip=10.0.0.70
 db_name=kubernetes
 
+ssh-keygen -f "/root/.ssh/known_hosts" -R "${db_ip}"
+
 # update and upgrade
 ssh $db_ip "apt-get -y update && apt-get -y upgrade"
 
