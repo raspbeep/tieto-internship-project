@@ -1,3 +1,4 @@
 .terraform*
 errored*
 ansible*
+basic_app/git
