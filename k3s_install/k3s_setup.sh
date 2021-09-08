@@ -9,7 +9,7 @@ k3sup install --k3s-version v1.19.1-rc2+k3s1 \
     --cluster \
     --user root \
     --ip 10.0.0.35 \
-    --k3s-extra-args '--docker --no-deploy=traefik --node-taint k3s-controlplane=true:NoExecute' \
+    --k3s-extra-args '--docker --no-deploy=traefik --write-kubeconfig-mode 644 --node-taint k3s-controlplane=true:NoExecute' \
     --datastore="mysql://root:TietoEVRY2021*@tcp(10.0.0.70:3306)/kubernetes" \
     --tls-san 10.0.0.60
 
